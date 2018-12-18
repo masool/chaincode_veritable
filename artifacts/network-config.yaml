@@ -1,0 +1,252 @@
+---
+# --------------------------------------------------------------------------------------------
+# The network connection profile provides client applications the information about the target
+# blockchain network that are necessary for the applications to interact with it. 
+# --------------------------------------------------------------------------------------------
+
+name: "cievus"
+description: "cievus Network"
+version: "1.0"
+
+channels:
+  cievuschannel:
+    orderers:
+      - orderer1.cievus.com
+      - orderer2.cievus.com
+      - orderer3.cievus.com
+
+    peers:
+      peer0.buyer.cievus.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+
+      peer1.buyer.cievus.com:
+        endorsingPeer: false
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: false
+      peer2.buyer.cievus.com:
+        endorsingPeer: false
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: false
+
+      peer0.finco.cievus.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+
+      peer1.finco.cievus.com:
+        endorsingPeer: false
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: false
+
+      peer2.finco.cievus.com:
+        endorsingPeer: false
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: false
+
+      peer0.supplier.cievus.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+
+      peer1.supplier.cievus.com:
+        endorsingPeer: false
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: false
+
+      peer2.supplier.cievus.com:
+        endorsingPeer: false
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: false
+
+    chaincodes:
+      - lending:v0
+
+organizations:
+  Buyer:
+    mspid: BuyerMSP
+    peers:
+      - peer0.buyer.cievus.com
+      - peer1.buyer.cievus.com
+      - peer2.buyer.cievus.com
+
+    certificateAuthorities:
+      - ca-buyer
+
+    adminPrivateKey:
+      path: artifacts/channel/crypto-config/peerOrganizations/buyer.cievus.com/users/Admin@buyer.cievus.com/msp/keystore/1ec9406a66c4e6687b28f8a2125486ac911fa6522b98e4e0c7105f368692a950_sk
+    signedCert:
+      path: artifacts/channel/crypto-config/peerOrganizations/buyer.cievus.com/users/Admin@buyer.cievus.com/msp/signcerts/Admin@buyer.cievus.com-cert.pem
+
+  Finco:
+    mspid: FincoMSP
+    peers:
+      - peer0.finco.cievus.com
+      - peer1.finco.cievus.com
+      - peer2.finco.cievus.com
+    certificateAuthorities:
+      - ca-finco
+    adminPrivateKey:
+      path: artifacts/channel/crypto-config/peerOrganizations/finco.cievus.com/users/Admin@finco.cievus.com/msp/keystore/0106cf1641881ac5d975b4682d52a230ce57fdea1cf5efcc6311de5e75897a9a_sk
+    signedCert:
+      path: artifacts/channel/crypto-config/peerOrganizations/finco.cievus.com/users/Admin@finco.cievus.com/msp/signcerts/Admin@finco.cievus.com-cert.pem
+
+  Supplier:
+    mspid: SupplierMSP
+    peers:
+      - peer0.supplier.cievus.com
+      - peer1.supplier.cievus.com
+      - peer2.supplier.cievus.com
+    certificateAuthorities:
+      - ca-supplier
+    adminPrivateKey:
+      path: artifacts/channel/crypto-config/peerOrganizations/supplier.cievus.com/users/Admin@supplier.cievus.com/msp/keystore/472188532efaeb279ced5817c201aed89084c5251df60bdf818443bec19496f9_sk
+    signedCert:
+      path: artifacts/channel/crypto-config/peerOrganizations/supplier.cievus.com/users/Admin@supplier.cievus.com/msp/signcerts/Admin@supplier.cievus.com-cert.pem
+
+orderers:
+  orderer1.cievus.com:
+    url: grpcs://localhost:15101
+    grpcOptions:
+      ssl-target-name-override: orderer1.cievus.com
+      grpc-max-send-message-length: 15
+    tlsCACerts:
+      path: artifacts/channel/crypto-config/ordererOrganizations/cievus.com/orderers/orderer1.cievus.com/tls/ca.crt
+
+  orderer2.cievus.com:
+    url: grpcs://localhost:15102
+    grpcOptions:
+      ssl-target-name-override: orderer2.cievus.com
+      grpc-max-send-message-length: 15
+    tlsCACerts:
+      path: artifacts/channel/crypto-config/ordererOrganizations/cievus.com/orderers/orderer2.cievus.com/tls/ca.crt
+
+  orderer3.cievus.com:
+    url: grpcs://localhost:15103
+    grpcOptions:
+      ssl-target-name-override: orderer3.cievus.com
+      grpc-max-send-message-length: 15
+    tlsCACerts:
+      path: artifacts/channel/crypto-config/ordererOrganizations/cievus.com/orderers/orderer3.cievus.com/tls/ca.crt
+
+peers:
+  peer0.buyer.cievus.com:
+    # this URL is used to send endorsement and query requests
+    url: grpcs://localhost:15121
+    # this URL is used to connect the EventHub and registering event listeners
+    eventUrl: grpcs://localhost:15123
+    grpcOptions:
+      ssl-target-name-override: peer0.buyer.cievus.com
+    tlsCACerts:
+      path: artifacts/channel/crypto-config/peerOrganizations/buyer.cievus.com/peers/peer0.buyer.cievus.com/tls/ca.crt
+
+  peer1.buyer.cievus.com:
+    url: grpcs://localhost:15125
+    eventUrl: grpcs://localhost:15127
+    grpcOptions:
+      ssl-target-name-override: peer1.buyer.cievus.com
+    tlsCACerts:
+      path: artifacts/channel/crypto-config/peerOrganizations/buyer.cievus.com/peers/peer1.buyer.cievus.com/tls/ca.crt
+
+  peer2.buyer.cievus.com:
+    url: grpcs://localhost:15129
+    eventUrl: grpcs://localhost:15131
+    grpcOptions:
+      ssl-target-name-override: peer2.buyer.cievus.com
+    tlsCACerts:
+      path: artifacts/channel/crypto-config/peerOrganizations/buyer.cievus.com/peers/peer2.buyer.cievus.com/tls/ca.crt
+
+  peer0.finco.cievus.com:
+    url: grpcs://localhost:15133
+    eventUrl: grpcs://localhost:15135
+    grpcOptions:
+      ssl-target-name-override: peer0.finco.cievus.com
+    tlsCACerts:
+      path: artifacts/channel/crypto-config/peerOrganizations/finco.cievus.com/peers/peer0.finco.cievus.com/tls/ca.crt
+
+  peer1.finco.cievus.com:
+    url: grpcs://localhost:15137
+    eventUrl: grpcs://localhost:15139
+    grpcOptions:
+      ssl-target-name-override: peer1.finco.cievus.com
+    tlsCACerts:
+      path: artifacts/channel/crypto-config/peerOrganizations/finco.cievus.com/peers/peer1.finco.cievus.com/tls/ca.crt
+
+  peer2.finco.cievus.com:
+    url: grpcs://localhost:15141
+    eventUrl: grpcs://localhost:15143
+    grpcOptions:
+      ssl-target-name-override: peer2.finco.cievus.com
+    tlsCACerts:
+      path: artifacts/channel/crypto-config/peerOrganizations/finco.cievus.com/peers/peer2.finco.cievus.com/tls/ca.crt
+
+  peer0.supplier.cievus.com:
+    url: grpcs://localhost:15145
+    eventUrl: grpcs://localhost:15147
+    grpcOptions:
+      ssl-target-name-override: peer0.supplier.cievus.com
+    tlsCACerts:
+      path: artifacts/channel/crypto-config/peerOrganizations/supplier.cievus.com/peers/peer0.supplier.cievus.com/tls/ca.crt
+
+  peer1.supplier.cievus.com:
+    url: grpcs://localhost:15149
+    eventUrl: grpcs://localhost:15151
+    grpcOptions:
+      ssl-target-name-override: peer1.supplier.cievus.com
+    tlsCACerts:
+      path: artifacts/channel/crypto-config/peerOrganizations/supplier.cievus.com/peers/peer1.supplier.cievus.com/tls/ca.crt
+
+  peer2.supplier.cievus.com:
+    url: grpcs://localhost:15153
+    eventUrl: grpcs://localhost:15155
+    grpcOptions:
+      ssl-target-name-override: peer2.supplier.cievus.com
+    tlsCACerts:
+      path: artifacts/channel/crypto-config/peerOrganizations/supplier.cievus.com/peers/peer2.supplier.cievus.com/tls/ca.crt
+
+certificateAuthorities:
+  ca-buyer:
+    url: https://localhost:15111
+    httpOptions:
+      verify: false
+    tlsCACerts:
+      path: artifacts/channel/crypto-config/peerOrganizations/buyer.cievus.com/ca/ca.buyer.cievus.com-cert.pem
+    registrar:
+      - enrollId: admin
+        enrollSecret: adminpw
+    # [Optional] The optional name of the CA.
+    caName: ca-buyer
+
+  ca-finco:
+    url: https://localhost:15112
+    httpOptions:
+      verify: false
+    tlsCACerts:
+      path: artifacts/channel/crypto-config/peerOrganizations/finco.cievus.com/ca/ca.finco.cievus.com-cert.pem
+    registrar:
+      - enrollId: admin
+        enrollSecret: adminpw
+    # [Optional] The optional name of the CA.
+    caName: ca-finco
+
+  ca-supplier:
+    url: https://localhost:15113
+    httpOptions:
+      verify: false
+    tlsCACerts:
+      path: artifacts/channel/crypto-config/peerOrganizations/supplier.cievus.com/ca/ca.supplier.cievus.com-cert.pem
+    registrar:
+      - enrollId: admin
+        enrollSecret: adminpw
+    # [Optional] The optional name of the CA.
+    caName: ca-supplier

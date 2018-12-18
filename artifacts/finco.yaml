@@ -1,0 +1,12 @@
+---
+
+name: "cievus-finco"
+description: "cievus Network - client definition for Finco"
+version: "1.0"
+
+client:
+  organization: Finco
+  credentialStore:
+    path: "./key/fabric-client-kv-finco"
+    cryptoStore:
+      path: "./key/cryptoStore/finco"

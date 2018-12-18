@@ -1,0 +1,12 @@
+---
+
+name: "cievus-supplier"
+description: "cievus Network - client definition for Supplier"
+version: "1.0"
+
+client:
+  organization: Supplier
+  credentialStore:
+    path: "./key/fabric-client-kv-supplier"
+    cryptoStore:
+      path: "./key/cryptoStore/supplier"

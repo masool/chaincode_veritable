@@ -1,0 +1,628 @@
+# ---------------------------------------------------------------------------------------------
+# This docker compose file bring up the Docker containers for running Hyperledger Fabric Network
+# ---------------------------------------------------------------------------------------------
+version: '2'
+
+networks:
+  network:
+
+services:
+
+  mysql.ca.buyer:
+    container_name: mysql.ca.buyer
+    extends:
+      file: base.yaml
+      service: mysql-base
+    volumes:
+      - ./Backup/Buyer/CA:/var/lib/mysql
+    networks:
+      - network
+
+  mysql.ca.finco:
+    container_name: mysql.ca.finco
+    extends:
+      file: base.yaml
+      service: mysql-base
+    volumes:
+      - ./Backup/Finco/CA:/var/lib/mysql
+    networks:
+      - network
+
+  mysql.ca.supplier:
+    container_name: mysql.ca.supplier
+    extends:
+      file: base.yaml
+      service: mysql-base
+    volumes:
+      - ./Backup/Supplier/CA:/var/lib/mysql
+    networks:
+      - network
+
+  ca.buyer.cievus.com:
+    container_name: ca.buyer.cievus.com
+    image: hyperledger/fabric-ca:1.1.0
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-buyer
+      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.buyer.cievus.com-cert.pem
+      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/6df445e99fc9b043b1a3717352902194bf44a5905bb35240635e798c1a5471d3_sk
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.buyer.cievus.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/6df445e99fc9b043b1a3717352902194bf44a5905bb35240635e798c1a5471d3_sk
+      - FABRIC_CA_SERVER_DB_TYPE=mysql
+      - FABRIC_CA_SERVER_DB_DATASOURCE=root:${MYSQL_PASSWORD}@tcp(mysql.ca.buyer:3306)/fabric_ca?parseTime=true
+    ports:
+      - "15111:7054"
+    command: sh -c 'fabric-ca-server start -b admin:adminpw -d --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.buyer.cievus.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/6df445e99fc9b043b1a3717352902194bf44a5905bb35240635e798c1a5471d3_sk'
+    volumes:
+      - ./channel/crypto-config/peerOrganizations/buyer.cievus.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    networks:
+      - network
+    depends_on:
+      - mysql.ca.buyer
+
+  ca.finco.cievus.com:
+    container_name: ca.finco.cievus.com
+    image: hyperledger/fabric-ca:1.1.0
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-finco
+      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.finco.cievus.com-cert.pem
+      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/2c86e9b3c6ff0be7cbad1ff9d43d935e612030e0c82c69bbb148ed156d888cdd_sk
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.finco.cievus.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/2c86e9b3c6ff0be7cbad1ff9d43d935e612030e0c82c69bbb148ed156d888cdd_sk
+      - FABRIC_CA_SERVER_DB_TYPE=mysql
+      - FABRIC_CA_SERVER_DB_DATASOURCE=root:${MYSQL_PASSWORD}@tcp(mysql.ca.finco:3306)/fabric_ca?parseTime=true
+    ports:
+      - "15112:7054"
+    command: sh -c 'fabric-ca-server start -b admin:adminpw -d --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.finco.cievus.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/2c86e9b3c6ff0be7cbad1ff9d43d935e612030e0c82c69bbb148ed156d888cdd_sk'
+    volumes:
+      - ./channel/crypto-config/peerOrganizations/finco.cievus.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    networks:
+      - network
+    depends_on:
+      - mysql.ca.finco
+
+  ca.supplier.cievus.com:
+    container_name: ca.supplier.cievus.com
+    image: hyperledger/fabric-ca:1.1.0
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-supplier
+      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.supplier.cievus.com-cert.pem
+      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/22bfc634d9ad394608e339ba3c9b3b7a9b939ec8e7896654972a01fba189e810_sk
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.supplier.cievus.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/22bfc634d9ad394608e339ba3c9b3b7a9b939ec8e7896654972a01fba189e810_sk
+      - FABRIC_CA_SERVER_DB_TYPE=mysql
+      - FABRIC_CA_SERVER_DB_DATASOURCE=root:${MYSQL_PASSWORD}@tcp(mysql.ca.supplier:3306)/fabric_ca?parseTime=true
+    ports:
+      - "15113:7054"
+    command: sh -c 'fabric-ca-server start -b admin:adminpw -d --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.supplier.cievus.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/22bfc634d9ad394608e339ba3c9b3b7a9b939ec8e7896654972a01fba189e810_sk'
+    volumes:
+      - ./channel/crypto-config/peerOrganizations/supplier.cievus.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    networks:
+      - network
+    depends_on:
+      - mysql.ca.supplier
+
+  zookeeper0:
+    container_name: zookeeper0.cievus.com
+    extends:
+      file: base.yaml
+      service: zookeeper-base
+    environment:
+      - ZOO_MY_ID=1
+      - ZOO_SERVERS=server.1=zookeeper0:2888:3888 server.2=zookeeper1:2888:3888 server.3=zookeeper2:2888:3888
+    volumes:
+      - ./Backup/Zookeeper/zk0/data:/data
+      - ./Backup/Zookeeper/zk0/datalog:/datalog
+    networks:
+      - network
+
+  zookeeper1:
+    container_name: zookeeper1.cievus.com
+    extends:
+      file: base.yaml
+      service: zookeeper-base
+    environment:
+      - ZOO_MY_ID=2
+      - ZOO_SERVERS=server.1=zookeeper0:2888:3888 server.2=zookeeper1:2888:3888 server.3=zookeeper2:2888:3888
+    volumes:
+      - ./Backup/Zookeeper/zk1/data:/data
+      - ./Backup/Zookeeper/zk1/datalog:/datalog
+    networks:
+      - network
+
+  zookeeper2:
+    container_name: zookeeper2.cievus.com
+    extends:
+      file: base.yaml
+      service: zookeeper-base
+    environment:
+      - ZOO_MY_ID=3
+      - ZOO_SERVERS=server.1=zookeeper0:2888:3888 server.2=zookeeper1:2888:3888 server.3=zookeeper2:2888:3888
+    volumes:
+      - ./Backup/Zookeeper/zk2/data:/data
+      - ./Backup/Zookeeper/zk2/datalog:/datalog
+    networks:
+      - network
+
+  kafka0:
+    container_name: kafka0.cievus.com
+    extends:
+      file: base.yaml
+      service: kafka-base
+    environment:
+      - KAFKA_BROKER_ID=0
+      - KAFKA_MIN_INSYNC_REPLICAS=2
+      - KAFKA_DEFAULT_REPLICATION_FACTOR=3
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper0:2181,zookeeper1:2181,zookeeper2:2181
+    volumes:
+      - ./Backup/Kafka/kafka0:/tmp/kafka-logs
+    networks:
+      - network
+    depends_on:
+      - zookeeper0
+      - zookeeper1
+      - zookeeper2
+
+  kafka1:
+    container_name: kafka1.cievus.com
+    extends:
+      file: base.yaml
+      service: kafka-base
+    environment:
+      - KAFKA_BROKER_ID=1
+      - KAFKA_MIN_INSYNC_REPLICAS=2
+      - KAFKA_DEFAULT_REPLICATION_FACTOR=3
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper0:2181,zookeeper1:2181,zookeeper2:2181
+    volumes:
+      - ./Backup/Kafka/kafka1:/tmp/kafka-logs
+    networks:
+      - network
+    depends_on:
+      - zookeeper0
+      - zookeeper1
+      - zookeeper2
+
+  kafka2:
+    container_name: kafka2.cievus.com
+    extends:
+      file: base.yaml
+      service: kafka-base
+    environment:
+      - KAFKA_BROKER_ID=2
+      - KAFKA_MIN_INSYNC_REPLICAS=2
+      - KAFKA_DEFAULT_REPLICATION_FACTOR=3
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper0:2181,zookeeper1:2181,zookeeper2:2181
+    volumes:
+      - ./Backup/Kafka/kafka2:/tmp/kafka-logs
+    networks:
+      - network
+    depends_on:
+      - zookeeper0
+      - zookeeper1
+      - zookeeper2
+
+  kafka3:
+    container_name: kafka3.cievus.com
+    extends:
+      file: base.yaml
+      service: kafka-base
+    environment:
+      - KAFKA_BROKER_ID=3
+      - KAFKA_MIN_INSYNC_REPLICAS=2
+      - KAFKA_DEFAULT_REPLICATION_FACTOR=3
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper0:2181,zookeeper1:2181,zookeeper2:2181
+    volumes:
+      - ./Backup/Kafka/kafka3:/tmp/kafka-logs
+    networks:
+      - network
+    depends_on:
+      - zookeeper0
+      - zookeeper1
+      - zookeeper2
+
+  orderer1.cievus.com:
+    container_name: orderer1.cievus.com
+    extends:
+      file: base.yaml
+      service: orderer-base
+    ports:
+      - 15101:7050
+    volumes:
+      - ./channel/crypto-config/ordererOrganizations/cievus.com/orderers/orderer1.cievus.com/:/etc/hyperledger/msp/orderer
+    networks:
+      - network
+    depends_on:
+      - kafka0
+      - kafka1
+      - kafka2
+      - kafka3
+
+  orderer2.cievus.com:
+    container_name: orderer2.cievus.com
+    extends:
+      file: base.yaml
+      service: orderer-base
+    ports:
+      - 15102:7050
+    volumes:
+      - ./channel/crypto-config/ordererOrganizations/cievus.com/orderers/orderer2.cievus.com/:/etc/hyperledger/msp/orderer
+    networks:
+      - network
+    depends_on:
+      - kafka0
+      - kafka1
+      - kafka2
+      - kafka3
+
+  orderer3.cievus.com:
+    container_name: orderer3.cievus.com
+    extends:
+      file: base.yaml
+      service: orderer-base
+    ports:
+      - 15103:7050
+    volumes:
+      - ./channel/crypto-config/ordererOrganizations/cievus.com/orderers/orderer3.cievus.com/:/etc/hyperledger/msp/orderer
+    networks:
+      - network
+    depends_on:
+      - kafka0
+      - kafka1
+      - kafka2
+      - kafka3
+
+  couchdb.peer0.buyer.cievus.com:
+    container_name: couchdb.peer0.buyer.cievus.com
+    extends:
+      file: base.yaml
+      service: couch-base
+    volumes:
+      - ./Backup/Buyer/CouchDb/peer0:/opt/couchdb/data
+    networks:
+      - network
+
+  peer0.buyer.cievus.com:
+    container_name: peer0.buyer.cievus.com
+    extends:
+      file:   base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.buyer.cievus.com
+      - CORE_PEER_LOCALMSPID=BuyerMSP
+      - CORE_PEER_ADDRESS=peer0.buyer.cievus.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.buyer.cievus.com:7051
+      - CORE_PEER_LISTENADDRESS=peer0.buyer.cievus.com:7051
+      - CORE_PEER_GOSSIP_ENDPOINT=peer0.buyer.cievus.com:7051
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb.peer0.buyer.cievus.com:5984
+    ports:
+      - 15121:7051
+      - 15123:7053
+    volumes:
+      - /var/run/:/host/var/run/
+      - ./channel/crypto-config/peerOrganizations/buyer.cievus.com/peers/peer0.buyer.cievus.com/:/etc/hyperledger/msp/peer
+      - ./Backup/Buyer/Peer/peer0:/var/hyperledger/production
+    depends_on:
+      - orderer1.cievus.com
+      - orderer2.cievus.com
+      - orderer3.cievus.com
+      - couchdb.peer0.buyer.cievus.com
+    networks:
+      - network
+
+  couchdb.peer1.buyer.cievus.com:
+    container_name: couchdb.peer1.buyer.cievus.com
+    extends:
+      file: base.yaml
+      service: couch-base
+    volumes:
+      - ./Backup/Buyer/CouchDb/peer1:/opt/couchdb/data
+    networks:
+      - network
+
+  peer1.buyer.cievus.com:
+    container_name: peer1.buyer.cievus.com
+    extends:
+      file:   base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.buyer.cievus.com
+      - CORE_PEER_LOCALMSPID=BuyerMSP
+      - CORE_PEER_ADDRESS=peer1.buyer.cievus.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.buyer.cievus.com:7051
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb.peer1.buyer.cievus.com:5984
+      - CORE_PEER_LISTENADDRESS=peer1.buyer.cievus.com:7051
+      - CORE_PEER_GOSSIP_ENDPOINT=peer1.buyer.cievus.com:7051
+    ports:
+      - 15125:7051
+      - 15127:7053
+    volumes:
+      - /var/run/:/host/var/run/
+      - ./channel/crypto-config/peerOrganizations/buyer.cievus.com/peers/peer1.buyer.cievus.com/:/etc/hyperledger/msp/peer
+      - ./Backup/Buyer/Peer/peer1:/var/hyperledger/production
+    depends_on:
+      - orderer1.cievus.com
+      - orderer2.cievus.com
+      - orderer3.cievus.com
+      - peer0.buyer.cievus.com
+      - couchdb.peer1.buyer.cievus.com
+    networks:
+      - network
+
+  couchdb.peer2.buyer.cievus.com:
+    container_name: couchdb.peer2.buyer.cievus.com
+    extends:
+      file: base.yaml
+      service: couch-base
+    volumes:
+      - ./Backup/Buyer/CouchDb/peer2:/opt/couchdb/data
+    networks:
+      - network
+
+  peer2.buyer.cievus.com:
+    container_name: peer2.buyer.cievus.com
+    extends:
+      file:   base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer2.buyer.cievus.com
+      - CORE_PEER_LOCALMSPID=BuyerMSP
+      - CORE_PEER_ADDRESS=peer2.buyer.cievus.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer2.buyer.cievus.com:7051
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb.peer2.buyer.cievus.com:5984
+      - CORE_PEER_LISTENADDRESS=peer2.buyer.cievus.com:7051
+      - CORE_PEER_GOSSIP_ENDPOINT=peer2.buyer.cievus.com:7051
+    ports:
+      - 15129:7051
+      - 15131:7053
+    volumes:
+      - /var/run/:/host/var/run/
+      - ./channel/crypto-config/peerOrganizations/buyer.cievus.com/peers/peer2.buyer.cievus.com/:/etc/hyperledger/msp/peer
+      - ./Backup/Buyer/Peer/peer2:/var/hyperledger/production
+    depends_on:
+      - orderer1.cievus.com
+      - orderer2.cievus.com
+      - orderer3.cievus.com
+      - peer0.buyer.cievus.com
+      - peer1.buyer.cievus.com
+      - couchdb.peer2.buyer.cievus.com
+    networks:
+      - network
+
+  couchdb.peer0.finco.cievus.com:
+    container_name: couchdb.peer0.finco.cievus.com
+    extends:
+      file: base.yaml
+      service: couch-base
+    volumes:
+      - ./Backup/Finco/CouchDb/peer0:/opt/couchdb/data
+    networks:
+      - network
+
+  peer0.finco.cievus.com:
+    container_name: peer0.finco.cievus.com
+    extends:
+      file:   base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.finco.cievus.com
+      - CORE_PEER_LOCALMSPID=FincoMSP
+      - CORE_PEER_ADDRESS=peer0.finco.cievus.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.finco.cievus.com:7051
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb.peer0.finco.cievus.com:5984
+      - CORE_PEER_LISTENADDRESS=peer0.finco.cievus.com:7051
+      - CORE_PEER_GOSSIP_ENDPOINT=peer0.finco.cievus.com:7051
+    ports:
+      - 15133:7051
+      - 15135:7053
+    volumes:
+      - /var/run/:/host/var/run/
+      - ./channel/crypto-config/peerOrganizations/finco.cievus.com/peers/peer0.finco.cievus.com/:/etc/hyperledger/msp/peer
+      - ./Backup/Finco/Peer/peer0:/var/hyperledger/production
+    depends_on:
+      - orderer1.cievus.com
+      - orderer2.cievus.com
+      - orderer3.cievus.com
+      - couchdb.peer0.finco.cievus.com
+    networks:
+      - network
+
+  couchdb.peer1.finco.cievus.com:
+    container_name: couchdb.peer1.finco.cievus.com
+    extends:
+      file: base.yaml
+      service: couch-base
+    volumes:
+      - ./Backup/Finco/CouchDb/peer1:/opt/couchdb/data
+    networks:
+      - network
+
+  peer1.finco.cievus.com:
+    container_name: peer1.finco.cievus.com
+    extends:
+      file:   base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.finco.cievus.com
+      - CORE_PEER_LOCALMSPID=FincoMSP
+      - CORE_PEER_ADDRESS=peer1.finco.cievus.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.finco.cievus.com:7051
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb.peer1.finco.cievus.com:5984
+      - CORE_PEER_LISTENADDRESS=peer1.finco.cievus.com:7051
+      - CORE_PEER_GOSSIP_ENDPOINT=peer1.finco.cievus.com:7051
+    ports:
+      - 15137:7051
+      - 15139:7053
+    volumes:
+      - /var/run/:/host/var/run/
+      - ./channel/crypto-config/peerOrganizations/finco.cievus.com/peers/peer1.finco.cievus.com/:/etc/hyperledger/msp/peer
+      - ./Backup/Finco/Peer/peer1:/var/hyperledger/production
+    depends_on:
+      - orderer1.cievus.com
+      - orderer2.cievus.com
+      - orderer3.cievus.com
+      - peer0.finco.cievus.com
+      - couchdb.peer1.finco.cievus.com
+    networks:
+      - network
+
+  couchdb.peer2.finco.cievus.com:
+    container_name: couchdb.peer2.finco.cievus.com
+    extends:
+      file: base.yaml
+      service: couch-base
+    volumes:
+      - ./Backup/Finco/CouchDb/peer2:/opt/couchdb/data
+    networks:
+      - network
+
+  peer2.finco.cievus.com:
+    container_name: peer2.finco.cievus.com
+    extends:
+      file:   base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer2.finco.cievus.com
+      - CORE_PEER_LOCALMSPID=FincoMSP
+      - CORE_PEER_ADDRESS=peer2.finco.cievus.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer2.finco.cievus.com:7051
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb.peer2.finco.cievus.com:5984
+      - CORE_PEER_LISTENADDRESS=peer2.finco.cievus.com:7051
+      - CORE_PEER_GOSSIP_ENDPOINT=peer2.finco.cievus.com:7051
+    ports:
+      - 15141:7051
+      - 15143:7053
+    volumes:
+      - /var/run/:/host/var/run/
+      - ./channel/crypto-config/peerOrganizations/finco.cievus.com/peers/peer2.finco.cievus.com/:/etc/hyperledger/msp/peer
+      - ./Backup/Finco/Peer/peer2:/var/hyperledger/production
+    depends_on:
+      - orderer1.cievus.com
+      - orderer2.cievus.com
+      - orderer3.cievus.com
+      - peer0.finco.cievus.com
+      - peer1.finco.cievus.com
+      - couchdb.peer2.finco.cievus.com
+    networks:
+      - network
+
+  couchdb.peer0.supplier.cievus.com:
+    container_name: couchdb.peer0.supplier.cievus.com
+    extends:
+      file: base.yaml
+      service: couch-base
+    volumes:
+      - ./Backup/Supplier/CouchDb/peer0:/opt/couchdb/data
+    networks:
+      - network
+
+  peer0.supplier.cievus.com:
+    container_name: peer0.supplier.cievus.com
+    extends:
+      file:   base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.supplier.cievus.com
+      - CORE_PEER_LOCALMSPID=SupplierMSP
+      - CORE_PEER_ADDRESS=peer0.supplier.cievus.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.supplier.cievus.com:7051
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb.peer0.supplier.cievus.com:5984
+      - CORE_PEER_LISTENADDRESS=peer0.supplier.cievus.com:7051
+      - CORE_PEER_GOSSIP_ENDPOINT=peer0.supplier.cievus.com:7051
+    ports:
+      - 15145:7051
+      - 15147:7053
+    volumes:
+      - /var/run/:/host/var/run/
+      - ./channel/crypto-config/peerOrganizations/supplier.cievus.com/peers/peer0.supplier.cievus.com/:/etc/hyperledger/msp/peer
+      - ./Backup/Supplier/Peer/peer0:/var/hyperledger/production
+    depends_on:
+      - orderer1.cievus.com
+      - orderer2.cievus.com
+      - orderer3.cievus.com
+      - couchdb.peer0.supplier.cievus.com
+    networks:
+      - network
+
+  couchdb.peer1.supplier.cievus.com:
+    container_name: couchdb.peer1.supplier.cievus.com
+    extends:
+      file: base.yaml
+      service: couch-base
+    volumes:
+      - ./Backup/Supplier/CouchDb/peer1:/opt/couchdb/data
+    networks:
+      - network
+
+  peer1.supplier.cievus.com:
+    container_name: peer1.supplier.cievus.com
+    extends:
+      file:   base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.supplier.cievus.com
+      - CORE_PEER_LOCALMSPID=SupplierMSP
+      - CORE_PEER_ADDRESS=peer1.supplier.cievus.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.supplier.cievus.com:7051
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb.peer1.supplier.cievus.com:5984
+      - CORE_PEER_LISTENADDRESS=peer1.supplier.cievus.com:7051
+      - CORE_PEER_GOSSIP_ENDPOINT=peer1.supplier.cievus.com:7051
+    ports:
+      - 15149:7051
+      - 15151:7053
+    volumes:
+      - /var/run/:/host/var/run/
+      - ./channel/crypto-config/peerOrganizations/supplier.cievus.com/peers/peer1.supplier.cievus.com/:/etc/hyperledger/msp/peer
+      - ./Backup/Supplier/Peer/peer1:/var/hyperledger/production
+    depends_on:
+      - orderer1.cievus.com
+      - orderer2.cievus.com
+      - orderer3.cievus.com
+      - peer0.supplier.cievus.com
+      - couchdb.peer1.supplier.cievus.com
+    networks:
+      - network
+
+  couchdb.peer2.supplier.cievus.com:
+    container_name: couchdb.peer2.supplier.cievus.com
+    extends:
+      file: base.yaml
+      service: couch-base
+    volumes:
+      - ./Backup/Supplier/CouchDb/peer2:/opt/couchdb/data
+    networks:
+      - network
+
+  peer2.supplier.cievus.com:
+    container_name: peer2.supplier.cievus.com
+    extends:
+      file:   base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer2.supplier.cievus.com
+      - CORE_PEER_LOCALMSPID=SupplierMSP
+      - CORE_PEER_ADDRESS=peer2.supplier.cievus.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer2.supplier.cievus.com:7051
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb.peer2.supplier.cievus.com:5984
+      - CORE_PEER_LISTENADDRESS=peer2.supplier.cievus.com:7051
+      - CORE_PEER_GOSSIP_ENDPOINT=peer2.supplier.cievus.com:7051
+    ports:
+      - 15153:7051
+      - 15155:7053
+    volumes:
+      - /var/run/:/host/var/run/
+      - ./channel/crypto-config/peerOrganizations/supplier.cievus.com/peers/peer2.supplier.cievus.com/:/etc/hyperledger/msp/peer
+      - ./Backup/Supplier/Peer/peer2:/var/hyperledger/production
+    depends_on:
+      - orderer1.cievus.com
+      - orderer2.cievus.com
+      - orderer3.cievus.com
+      - peer0.supplier.cievus.com
+      - peer1.supplier.cievus.com
+      - couchdb.peer2.supplier.cievus.com
+    networks:
+      - network

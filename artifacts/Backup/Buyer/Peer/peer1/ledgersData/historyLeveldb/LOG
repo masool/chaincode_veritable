@@ -1,0 +1,45 @@
+=============== Sep 11, 2018 (UTC) ===============
+04:59:28.710804 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+04:59:28.710929 db@open opening
+04:59:28.711123 version@stat F·[] S·0B[] Sc·[]
+04:59:28.713089 db@janitor F·2 G·0
+04:59:28.713111 db@open done T·2.174061ms
+=============== Sep 14, 2018 (UTC) ===============
+17:28:21.841662 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+17:28:21.844012 version@stat F·[] S·0B[] Sc·[]
+17:28:21.844027 db@open opening
+17:28:21.844090 journal@recovery F·1
+17:28:21.844939 journal@recovery recovering @1
+17:28:21.848173 memdb@flush created L0@2 N·39 S·578B "cie..l\x00\x00,v39":"cie..\x01\x01\x00,v2"
+17:28:21.850673 version@stat F·[1] S·578B[578B] Sc·[0.25]
+17:28:21.852188 db@janitor F·3 G·0
+17:28:21.852212 db@open done T·8.175973ms
+=============== Oct 3, 2018 (UTC) ===============
+10:05:53.367983 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+10:05:53.369666 version@stat F·[1] S·578B[578B] Sc·[0.25]
+10:05:53.369681 db@open opening
+10:05:53.369766 journal@recovery F·1
+10:05:53.369891 journal@recovery recovering @3
+10:05:53.373062 memdb@flush created L0@5 N·75 S·947B "cie..l\x00\x00,v115":"cie..\x018\x00,v114"
+10:05:53.378142 version@stat F·[2] S·1KiB[1KiB] Sc·[0.50]
+10:05:53.378431 db@janitor F·4 G·0
+10:05:53.378447 db@open done T·8.758081ms
+=============== Oct 12, 2018 (UTC) ===============
+03:35:03.370776 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+03:35:03.372772 version@stat F·[2] S·1KiB[1KiB] Sc·[0.50]
+03:35:03.372789 db@open opening
+03:35:03.372859 journal@recovery F·1
+03:35:03.373716 journal@recovery recovering @6
+03:35:03.374344 version@stat F·[2] S·1KiB[1KiB] Sc·[0.50]
+03:35:03.374623 db@janitor F·4 G·0
+03:35:03.374662 db@open done T·1.864595ms
+=============== Oct 14, 2018 (UTC) ===============
+21:35:26.854742 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+21:35:26.856766 version@stat F·[2] S·1KiB[1KiB] Sc·[0.50]
+21:35:26.856782 db@open opening
+21:35:26.856838 journal@recovery F·1
+21:35:26.860209 journal@recovery recovering @8
+21:35:26.864651 memdb@flush created L0@10 N·6 S·210B "cie..l\x00\x00,v122":"cie..\x01;\x00,v121"
+21:35:26.864881 version@stat F·[3] S·1KiB[1KiB] Sc·[0.75]
+21:35:26.865166 db@janitor F·5 G·0
+21:35:26.865189 db@open done T·8.398688ms

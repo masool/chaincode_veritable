@@ -1,0 +1,654 @@
+{
+	"info": {
+		"_postman_id": "74a2b8f9-6167-4247-9576-50bc4007fda5",
+		"name": "cievus",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Update Invoice",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MzE5NDY3MjIsInVzZXJuYW1lIjoiYnV5ZXI2QGVtYWlsLmNvbSIsIm9yZ05hbWUiOiJCdXllciIsImlhdCI6MTUzMTkxMDcyMn0.y1m2qdsxusHNtsSugUAI31Lio55EpRRWyKmv28DGHG0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"args\":[\"100\",\"Invoice Updated........\"]}"
+				},
+				"url": {
+					"raw": "52.91.181.60:4000/api/v1/update_invoice",
+					"host": [
+						"52",
+						"91",
+						"181",
+						"60"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"update_invoice"
+					]
+				},
+				"description": "create a new Invoice"
+			},
+			"response": []
+		},
+		{
+			"name": "Invoice History",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MzE5NDY3MjIsInVzZXJuYW1lIjoiYnV5ZXI2QGVtYWlsLmNvbSIsIm9yZ05hbWUiOiJCdXllciIsImlhdCI6MTUzMTkxMDcyMn0.y1m2qdsxusHNtsSugUAI31Lio55EpRRWyKmv28DGHG0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "34.205.89.187:4000/api/v1/get_Invoice_History/:invoiceNumber",
+					"host": [
+						"34",
+						"205",
+						"89",
+						"187"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"get_Invoice_History",
+						":invoiceNumber"
+					],
+					"variable": [
+						{
+							"key": "invoiceNumber",
+							"value": "100"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Invoice",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MzE5NDY3MjIsInVzZXJuYW1lIjoiYnV5ZXI2QGVtYWlsLmNvbSIsIm9yZ05hbWUiOiJCdXllciIsImlhdCI6MTUzMTkxMDcyMn0.y1m2qdsxusHNtsSugUAI31Lio55EpRRWyKmv28DGHG0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "34.205.89.187:4000/api/v1/delete_invoice/:invoiceNumber",
+					"host": [
+						"34",
+						"205",
+						"89",
+						"187"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"delete_invoice",
+						":invoiceNumber"
+					],
+					"variable": [
+						{
+							"key": "invoiceNumber",
+							"value": "105"
+						}
+					]
+				},
+				"description": "delete invoice"
+			},
+			"response": []
+		},
+		{
+			"name": "Create new Invoice",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MzIxNDY4NzAsInVzZXJuYW1lIjoiYnV5ZXJAZW1haWwuY29tIiwib3JnTmFtZSI6IkJ1eWVyIiwiaWF0IjoxNTMyMTEwODcwfQ.ku0dRwj8me3B51uak1kqLyxwDH_oHqY3SGQqUPE1Wmw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"args\":[\"1\",\"BuyerName\",\"106\",\"16-07-2018\",\"PO524\",\"10-07-2018\",\"16-07-2018\",\"25-07-2018\",\"15000\",\"USD\",\"8521\",\"2\",\"SupplierName\",\"101\",\"LegalOwnerName\",\"Obligator\",\"4.50\",\"0.25\",\"New Invoice\",\"16-07-2018\",\"BuyerName\",\"16-07-2018\",\"UpdatedBy\",\"15253.55\",\"4.25\",\"4.236\",\"55\",\"FincoOrg\",\"14596.12\"]}"
+				},
+				"url": {
+					"raw": "localhost:4000/api/v1/create_invoice",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"create_invoice"
+					]
+				},
+				"description": "create a new Invoice"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Invoices",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MzIwNDM3MzUsInVzZXJuYW1lIjoiYnV5ZXJAZW1haWwuY29tIiwib3JnTmFtZSI6IkJ1eWVyIiwiaWF0IjoxNTMyMDA3NzM1fQ.aDyPq6gs4iv79CYG5CG4R8YqyxuQjUpq0mAHjiqwFdI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "52.91.181.60:4000/api/v1/get_All_invoice",
+					"host": [
+						"52",
+						"91",
+						"181",
+						"60"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"get_All_invoice"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Invoice",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MzIwNDM3MzUsInVzZXJuYW1lIjoiYnV5ZXJAZW1haWwuY29tIiwib3JnTmFtZSI6IkJ1eWVyIiwiaWF0IjoxNTMyMDA3NzM1fQ.aDyPq6gs4iv79CYG5CG4R8YqyxuQjUpq0mAHjiqwFdI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "52.91.181.60:4000/api/v1/get_invoice?invoiceNumber=105",
+					"host": [
+						"52",
+						"91",
+						"181",
+						"60"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"get_invoice"
+					],
+					"query": [
+						{
+							"key": "invoiceNumber",
+							"value": "105"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Enroll new User",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "buyer@email.com",
+							"type": "text"
+						},
+						{
+							"key": "orgName",
+							"value": "Buyer",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:4000/api/v1/enroll_users",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"enroll_users"
+					]
+				},
+				"description": "1. enroll new user"
+			},
+			"response": []
+		},
+		{
+			"name": "Invoice By Org ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MzE5NDY3MjIsInVzZXJuYW1lIjoiYnV5ZXI2QGVtYWlsLmNvbSIsIm9yZ05hbWUiOiJCdXllciIsImlhdCI6MTUzMTkxMDcyMn0.y1m2qdsxusHNtsSugUAI31Lio55EpRRWyKmv28DGHG0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "34.205.89.187:4000/api/v1/get_invoice_By_OrgID/:OrgID",
+					"host": [
+						"34",
+						"205",
+						"89",
+						"187"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"get_invoice_By_OrgID",
+						":OrgID"
+					],
+					"variable": [
+						{
+							"key": "OrgID",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "channel_Info",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MzIxNDY4NzAsInVzZXJuYW1lIjoiYnV5ZXJAZW1haWwuY29tIiwib3JnTmFtZSI6IkJ1eWVyIiwiaWF0IjoxNTMyMTEwODcwfQ.ku0dRwj8me3B51uak1kqLyxwDH_oHqY3SGQqUPE1Wmw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "localhost:4000/api/v1/cievuschannel/info",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"cievuschannel",
+						"info"
+					]
+				},
+				"description": "channel Info"
+			},
+			"response": []
+		},
+		{
+			"name": "block_Info",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MzIxNDY4NzAsInVzZXJuYW1lIjoiYnV5ZXJAZW1haWwuY29tIiwib3JnTmFtZSI6IkJ1eWVyIiwiaWF0IjoxNTMyMTEwODcwfQ.ku0dRwj8me3B51uak1kqLyxwDH_oHqY3SGQqUPE1Wmw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "localhost:4000/api/v1/cievuschannel/block_info/:blockId",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"cievuschannel",
+						"block_info",
+						":blockId"
+					],
+					"variable": [
+						{
+							"key": "blockId",
+							"value": "2"
+						}
+					]
+				},
+				"description": "block Info"
+			},
+			"response": []
+		},
+		{
+			"name": "transaction_Info",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MzIxNDY4NzAsInVzZXJuYW1lIjoiYnV5ZXJAZW1haWwuY29tIiwib3JnTmFtZSI6IkJ1eWVyIiwiaWF0IjoxNTMyMTEwODcwfQ.ku0dRwj8me3B51uak1kqLyxwDH_oHqY3SGQqUPE1Wmw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "localhost:4000/api/v1/cievuschannel/transaction_info/:trxnId",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"cievuschannel",
+						"transaction_info",
+						":trxnId"
+					],
+					"variable": [
+						{
+							"key": "trxnId",
+							"value": "08d1c9ccca1e2171a3c5f35512ce5c0e96a6b6542c9d57d6e405c339dca82bcb"
+						}
+					]
+				},
+				"description": "transaction_Info"
+			},
+			"response": []
+		},
+		{
+			"name": "blockBy_hash",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MzIxNDY4NzAsInVzZXJuYW1lIjoiYnV5ZXJAZW1haWwuY29tIiwib3JnTmFtZSI6IkJ1eWVyIiwiaWF0IjoxNTMyMTEwODcwfQ.ku0dRwj8me3B51uak1kqLyxwDH_oHqY3SGQqUPE1Wmw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "localhost:4000/api/v1/block/by_hash?hash=28a9a31719dd7fbf14c1de9c68a212ff7c7f0d9dfd49e43e27128512406a8968",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"block",
+						"by_hash"
+					],
+					"query": [
+						{
+							"key": "hash",
+							"value": "28a9a31719dd7fbf14c1de9c68a212ff7c7f0d9dfd49e43e27128512406a8968"
+						}
+					]
+				},
+				"description": "blockBy_hash"
+			},
+			"response": []
+		},
+		{
+			"name": "instantiated_chaincodes",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MzIxNDY4NzAsInVzZXJuYW1lIjoiYnV5ZXJAZW1haWwuY29tIiwib3JnTmFtZSI6IkJ1eWVyIiwiaWF0IjoxNTMyMTEwODcwfQ.ku0dRwj8me3B51uak1kqLyxwDH_oHqY3SGQqUPE1Wmw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "localhost:4000/api/v1/cievuschannel/instantiated_chaincodes",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"cievuschannel",
+						"instantiated_chaincodes"
+					]
+				},
+				"description": "instantiated_chaincodes"
+			},
+			"response": []
+		},
+		{
+			"name": "installed_chaincodes",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MzIxNDY4NzAsInVzZXJuYW1lIjoiYnV5ZXJAZW1haWwuY29tIiwib3JnTmFtZSI6IkJ1eWVyIiwiaWF0IjoxNTMyMTEwODcwfQ.ku0dRwj8me3B51uak1kqLyxwDH_oHqY3SGQqUPE1Wmw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "localhost:4000/api/v1/cievuschannel/installed_chaincodes",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"cievuschannel",
+						"installed_chaincodes"
+					]
+				},
+				"description": "installed_chaincodes"
+			},
+			"response": []
+		},
+		{
+			"name": "get_channels",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MzIxNDY4NzAsInVzZXJuYW1lIjoiYnV5ZXJAZW1haWwuY29tIiwib3JnTmFtZSI6IkJ1eWVyIiwiaWF0IjoxNTMyMTEwODcwfQ.ku0dRwj8me3B51uak1kqLyxwDH_oHqY3SGQqUPE1Wmw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "localhost:4000/api/v1/get_channels",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"get_channels"
+					]
+				},
+				"description": "get_channels"
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer"
+	}
+}

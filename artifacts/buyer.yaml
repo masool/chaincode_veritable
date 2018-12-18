@@ -1,0 +1,12 @@
+---
+
+name: "cievus-buyer"
+description: "ciebus Network - client definition for Buyer"
+version: "1.0"
+
+client:
+  organization: Buyer
+  credentialStore:
+    path: "./key/fabric-client-kv-buyer"
+    cryptoStore:
+      path: "./key/cryptoStore/buyer"

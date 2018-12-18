@@ -1,0 +1,46 @@
+# ---------------------------------------------------------------------------
+# "OrdererOrgs" - Definition of organizations managing orderer nodes
+# ---------------------------------------------------------------------------
+OrdererOrgs:
+  - Name: Orderer
+    Domain: cievus.com
+    Specs:
+      - Hostname: orderer1
+      - Hostname: orderer2
+      - Hostname: orderer3
+
+# ---------------------------------------------------------------------------
+# "PeerOrgs" - Definition of organizations managing peer nodes
+# ---------------------------------------------------------------------------
+PeerOrgs:
+  - Name: Buyer
+    Domain: buyer.cievus.com
+    CA:
+       Hostname: ca # implicitly ca.buyer.cievus.com
+    Template:
+      Count: 3
+      # Start: 5
+      SANS:
+        - "localhost"
+    Users:
+      Count: 1
+  - Name: Finco
+    Domain: finco.cievus.com
+    CA:
+       Hostname: ca # implicitly ca.finco.cievus.com
+    Template:
+      Count: 3
+      SANS:
+        - "localhost"
+    Users:
+      Count: 1
+  - Name: Supplier
+    Domain: supplier.cievus.com
+    CA:
+       Hostname: ca # implicitly ca.supplier.cievus.com
+    Template:
+      Count: 3
+      SANS:
+        - "localhost"
+    Users:
+      Count: 1
